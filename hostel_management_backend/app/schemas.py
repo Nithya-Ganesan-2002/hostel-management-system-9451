@@ -39,3 +39,24 @@ class StudentUpdateSchema(Schema):
     dob = fields.Date()
     phone_number = fields.Str()
     room_id = fields.Int()
+
+class PaymentSchema(Schema):
+    id = fields.Int(dump_only=True)
+    student_id = fields.Int(required=True)
+    amount = fields.Float(required=True)
+    date = fields.DateTime(dump_only=True)
+    status = fields.Str()
+
+class PaymentUpdateSchema(Schema):
+    amount = fields.Float()
+    status = fields.Str()
+
+class AttendanceSchema(Schema):
+    id = fields.Int(dump_only=True)
+    student_id = fields.Int(required=True)
+    date = fields.Date(required=True)
+    present = fields.Boolean(required=True)
+
+class AttendanceUpdateSchema(Schema):
+    date = fields.Date()
+    present = fields.Boolean()

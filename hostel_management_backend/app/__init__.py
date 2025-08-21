@@ -10,6 +10,8 @@ from .routes.health import blp
 from .routes.auth import blp as auth_blp
 from .routes.rooms import blp as rooms_blp
 from .routes.students import blp as students_blp
+from .routes.payments import blp as payments_blp
+from .routes.attendance import blp as attendance_blp
 
 
 app = Flask(__name__)
@@ -38,6 +40,8 @@ api.register_blueprint(blp)
 api.register_blueprint(auth_blp)
 api.register_blueprint(rooms_blp)
 api.register_blueprint(students_blp)
+api.register_blueprint(payments_blp)
+api.register_blueprint(attendance_blp)
 
 # Import models to ensure they are registered with SQLAlchemy
 from . import models
