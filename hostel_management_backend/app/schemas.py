@@ -60,3 +60,21 @@ class AttendanceSchema(Schema):
 class AttendanceUpdateSchema(Schema):
     date = fields.Date()
     present = fields.Boolean()
+
+
+class NotificationSchema(Schema):
+    id = fields.Int(dump_only=True)
+    user_id = fields.Int(dump_only=True)
+    message = fields.Str(dump_only=True)
+    timestamp = fields.DateTime(dump_only=True)
+    is_read = fields.Boolean()
+
+class NotificationUpdateSchema(Schema):
+    is_read = fields.Boolean(required=True)
+
+class ProfileUpdateSchema(Schema):
+    name = fields.Str()
+    father_name = fields.Str()
+    address = fields.Str()
+    dob = fields.Date()
+    phone_number = fields.Str()
