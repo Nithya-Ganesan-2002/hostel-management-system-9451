@@ -4,13 +4,19 @@ from flask_cors import CORS
 from flask_smorest import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_jwt_extended import JWTManager
 
 from .routes.health import blp
+from .routes.auth import blp as auth_blp
 
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 CORS(app, resources={r"/*": {"origins": "*"}})
+
+# JWT Configuration
+app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY", "super-secret") # Change this in production
+jwt = JWTManager(app)
 
 # Database configuration
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///data.db")
@@ -27,6 +33,7 @@ migrate = Migrate(app, db)
 
 api = Api(app)
 api.register_blueprint(blp)
+api.register_blueprint(auth_blp)
 
 # Import models to ensure they are registered with SQLAlchemy
 from . import models

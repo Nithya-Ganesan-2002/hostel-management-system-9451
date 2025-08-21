@@ -21,3 +21,4 @@ flask-cors==5.0.1
 Flask-SQLAlchemy
 Flask-Migrate
 psycopg2-binary
+Flask-JWT-Extended
