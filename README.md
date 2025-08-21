@@ -1,1 +1,3 @@
-# hostel-management-system-9451
+# Project Repository
+
+This is the initial README file for the project.
