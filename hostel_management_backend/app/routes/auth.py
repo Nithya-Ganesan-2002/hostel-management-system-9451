@@ -4,7 +4,7 @@ from flask_jwt_extended import create_access_token
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import db
-from app.models import User
+from app.models import User, UserRole
 from app.schemas import UserSchema, LoginSchema
 
 blp = Blueprint("Auth", "auth", url_prefix="/auth", description="Operations on users")
@@ -24,6 +24,7 @@ class UserRegister(MethodView):
             username=user_data["username"],
             email=user_data["email"],
             password=generate_password_hash(user_data["password"]),
+            role=user_data.get("role", UserRole.STUDENT)
         )
         db.session.add(user)
         db.session.commit()
@@ -40,7 +41,8 @@ class UserLogin(MethodView):
         ).first()
 
         if user and check_password_hash(user.password, user_data["password"]):
-            access_token = create_access_token(identity=user.id)
+            additional_claims = {"is_admin": user.role == UserRole.ADMIN}
+            access_token = create_access_token(identity=user.id, additional_claims=additional_claims)
             return {"access_token": access_token}
 
         abort(401, message="Invalid credentials.")

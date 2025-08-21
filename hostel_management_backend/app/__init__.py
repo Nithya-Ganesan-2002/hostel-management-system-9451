@@ -8,10 +8,12 @@ from flask_jwt_extended import JWTManager
 
 from .routes.health import blp
 from .routes.auth import blp as auth_blp
+from .routes.rooms import blp as rooms_blp
+from .routes.students import blp as students_blp
 
 
 app = Flask(__name__)
-app.url_map.strict_slashes = False
+app.url_map.strict_.slashes = False
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 # JWT Configuration
@@ -34,6 +36,8 @@ migrate = Migrate(app, db)
 api = Api(app)
 api.register_blueprint(blp)
 api.register_blueprint(auth_blp)
+api.register_blueprint(rooms_blp)
+api.register_blueprint(students_blp)
 
 # Import models to ensure they are registered with SQLAlchemy
 from . import models
